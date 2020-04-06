@@ -1,4 +1,5 @@
 const connection = require('../database/connection');
+const { celebrate, Segments, Joi } = require('celebrate');
 
 module.exports = {
   async index (req, res) {
@@ -19,6 +20,13 @@ module.exports = {
         'ongs.region']);
   
     return res.header('X-Total-Count', count['count(*)']).json(incidents);
+  },
+  async indexValidator() {
+    return celebrate({
+      [Segments.QUERY]: Joi.object().keys({
+            page: Joi.number()
+      })
+    });
   },
   async create(req, res) {
     const { title, description, value } = req.body;

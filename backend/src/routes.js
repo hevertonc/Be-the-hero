@@ -21,11 +21,7 @@ routes.get('/ongs', OngController.index)
             })
       }), OngController.create);
 
-routes.get('/incidents', celebrate({
-            [Segments.QUERY]: Joi.object().keys({
-                  page: Joi.number()
-            })
-      }), IncidentController.index)
+routes.get('/incidents', IncidentController.indexValidator, IncidentController.index)
       .post('/incidents', IncidentController.create)
       .delete('/incidents/:id', celebrate({
             [Segments.PARAMS]: Joi.object().keys({
